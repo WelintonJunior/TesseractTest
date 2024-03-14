@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR com a Câmera</title>
+    <script src="./node_modules/tesseract.js/dist/tesseract.min.js"></script>
+    <style>
+        #video-container {
+            overflow: hidden;
+            width: 640px;
+            /* Largura do vídeo */
+            height: 480px;
+            /* Altura do vídeo */
+        }
+
+        #video {
+            transition: transform 0.2s ease-in-out;
+            /* Transição suave para o efeito de zoom */
+            width: 100%;
+            /* Ajuste para ocupar todo o espaço disponível */
+            height: auto;
+            /* Ajuste para manter a proporção da imagem */
+        }
+
+        .zoom-in {
+            transform: scale(1.2);
+            /* Zoom in 20% */
+        }
+
+        .zoom-out {
+            transform: scale(0.8);
+            /* Zoom out 20% */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="video-container">
+        <video id="video" autoplay></video>
+    </div>
+    <button id="zoom-in-btn">Zoom In</button>
+    <button id="zoom-out-btn">Zoom Out</button>
+    <button id="capture-btn">Capturar</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <div id="output">
+        <input type="text" id="outInput">
+    </div>
+
+    <script>
+        function initializeTesseract() {
+            console.log('Tesseract.js initialized');
+        }
+
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const output = document.getElementById('output');
+        const captureBtn = document.getElementById('capture-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+
+        let zoomLevel = 1; // Nível de zoom inicial
+
+        // Botão de Zoom In
+        zoomInBtn.addEventListener('click', () => {
+            zoomLevel += 0.2; // Aumentar o nível de zoom
+            video.classList.remove('zoom-out'); // Remover classe de zoom-out (se existir)
+            video.classList.add('zoom-in'); // Adicionar classe de zoom-in
+        });
+
+        // Botão de Zoom Out
+        zoomOutBtn.addEventListener('click', () => {
+            zoomLevel -= 0.2; // Diminuir o nível de zoom
+            video.classList.remove('zoom-in'); // Remover classe de zoom-in (se existir)
+            video.classList.add('zoom-out'); // Adicionar classe de zoom-out
+        });
+
+        // Acessar a câmera do celular usando WebRTC
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(err => {
+                console.error('Erro ao acessar a câmera: ', err);
+            });
+
+        // Capturar imagem quando o botão for clicado
+        captureBtn.addEventListener('click', () => {
+            const interval = setInterval(() => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // Verificar se Tesseract.js está inicializado
+                if (typeof Tesseract === 'undefined') {
+                    console.error('Tesseract.js not initialized yet');
+                    return;
+                }
+
+                Tesseract.recognize(
+                    canvas.toDataURL(), // Passar a imagem como base64
+                    'eng', // idioma
+                    { logger: m => console.log(m) } // logger opcional
+                ).then(({ data: { text } }) => {
+                    // Expressão regular para selecionar apenas números
+                    const regex = /[0-9]+/g;
+                    const numbers = text.trim().match(regex);
+
+                    // Verificar se há números extraídos
+                    if (numbers) {
+                        clearInterval(interval);
+                        document.getElementById('outInput').value = numbers;
+                    } else {
+                        console.log('Nenhum número encontrado.');
+                    }
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
