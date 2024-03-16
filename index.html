@@ -10,27 +10,51 @@
 </head>
 
 <body>
+    <div id="bodyModal" class="bodyModal">
+        <section id="modal" class="modal">
+            <div class="modal-header">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div class="modal-body">
+                <h3>Operação Iniciada</h3>
+            </div>
+            <div class="modal-footer">
+                <button id="okModal" class="btn">Ok</button>
+            </div>
+        </section>
+        <div id="overlay" class="overlay"></div>
+    </div>
+
+
     <div class="um">
         <div id="video-container">
             <video id="video" autoplay></video>
         </div>
         <div class="botoes">
+            <p>Automático: </p>
             <button id="capture-btn">Iniciar operação</button>
-            <button id="cadastrarManual">Cadastrar Manualmente</button>
+            <p>Manual: </p>
+            <button id="oprManual">Iniciar operação manual</button>
+            <div class="lala">
+                <div id="output">
+                    <span class="numeros">Numeros: </span><input type="text" id="outInput">
+                </div>
+                <button disabled id="cadastrarManual">Cadastrar Manualmente</button>
+            </div>
+            <p>Resetar</p>
             <button id="resetar" disabled>Resetar</button>
             <canvas id="canvas" style="display:none;"></canvas>
         </div><br>
-        <div id="output">
-            Numeros: <input type="text" id="outInput">
-        </div>
         <br>
     </div>
     <div class="dois">
+        <h4 id="titleChart">Peso Empada (und)</h4>
         <canvas id="chartNumeros"></canvas>
     </div>
     <div class="tres">
-        <span>Tempo Total Gasto: <span id="total"></span></span> <br>
-        Tempo Gasto Cada: <div id="cada"></div>
+        <h4 id="titleChart">Tempo gasto p/ empada</h4>
+        <canvas id="chartTempo"></canvas>
+        <h4>Tempo Total Gasto: <span id="total"></span></h4> <br>
     </div>
     <script src="./scriptCamera.js"></script>
     <script src="./scriptManual.js"></script>

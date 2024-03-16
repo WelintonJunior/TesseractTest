@@ -16,8 +16,21 @@ navigator.mediaDevices.getUserMedia({ video: true })
         console.error('Erro ao acessar a câmera: ', err);
     });
 
-// Capturar imagem quando o botão for clicado
+//MOSTRA O MODAL
 captureBtn.addEventListener('click', () => {
+    document.getElementById('modal').style.display = "flex"
+    document.getElementById('bodyModal').style.display = "flex"
+    document.getElementById('overlay').style.display = "flex"
+})
+
+//INICIA A OPERAÇÂO
+document.getElementById('okModal').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('modal').style.display = "none"
+    document.getElementById('bodyModal').style.display = "none"
+    document.getElementById('overlay').style.display = "none"
+    document.getElementById('oprManual').setAttribute('disabled', 'disabled')
+
     let currentTime = Date.now();
     if (startTime === 0) {
         startTime = currentTime;
@@ -63,7 +76,11 @@ captureBtn.addEventListener('click', () => {
                 chartNumeros.update();
                 const timeSinceLastClick = (finalTimeCada - currentTime) / 1000;
                 arrayGastoCada.push(timeSinceLastClick);
-                document.getElementById('cada').innerHTML += `<li>Tempo Empada 1: ${timeSinceLastClick.toFixed(2)} segundos</li>`;
+                chartTempo.data.labels.push(`Empada 1`);
+                chartTempo.data.datasets.forEach((dataset) => {
+                    dataset.data.push(timeSinceLastClick);
+                });
+                chartTempo.update();
             });
         } else {
             console.log('Nenhum número encontrado.');
@@ -111,7 +128,11 @@ captureBtn.addEventListener('click', () => {
                     const timeSinceLastClick = (finalTimeCada - currentTime) / 1000;
                     currentTime = Date.now();
                     arrayGastoCada.push(timeSinceLastClick);
-                    document.getElementById('cada').innerHTML += `<li>Tempo Empada ${empada + 1}: ${timeSinceLastClick.toFixed(2)} segundos</li>`;
+                    chartTempo.data.labels.push(`Empada ${empada + 1}`);
+                    chartTempo.data.datasets.forEach((dataset) => {
+                        dataset.data.push(timeSinceLastClick);
+                    });
+                    chartTempo.update();
                     empada++;
                 });
             } else {

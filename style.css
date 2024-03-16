@@ -1,12 +1,14 @@
 body {
     display: flex;
     font-family: sans-serif;
+    overflow: hidden;
 }
 
 #video-container {
     overflow: hidden;
     width: 99%;
     height: 300px;
+    border: 1px solid black;
 }
 
 #video {
@@ -60,9 +62,136 @@ body {
     cursor: pointer;
 }
 
-.botoes button:hover {
+.botoes button:disabled {
+    background-color: rgb(173, 216, 230);
+    border: 1px solid black;
+    padding: 5px;
+    cursor: not-allowed;
+}
+
+.botoes button:enabled:hover {
     background-color: white;
     color: black;
     border: 1px solid black;
     transition: 1s;
+}
+
+
+
+#titleChart {
+    text-align: center;
+}
+
+.lala {
+    display: flex;
+    margin-top: 10px;
+}
+
+#outInput {
+    margin-right: 10px;
+}
+
+.bodyModal {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    position: absolute;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+.modal {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    width: 450px;
+    padding: 1.5rem;
+    min-height: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.modal-header,
+.modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.modal h3 {
+    font-size: 1.2rem;
+    /* Increased heading size */
+    margin: 0;
+    /* Removed margin for better layout */
+}
+
+.modal input {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.modal p {
+    font-size: 1em;
+    color: #777;
+    margin: 0.5rem 0 0.2rem;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+}
+
+.btn {
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+    float: right;
+}
+
+.btn-close {
+    background: transparent;
+    /* Transparent background for close button */
+    color: #aaa;
+    /* Lighter color for close button */
+    font-size: 1.2rem;
+    /* Increased size for close button icon */
+    border: none;
+    /* Removed border for close button */
+    padding: 0;
+    /* Removed padding for close button */
+    transform: translate(0, -10px);
+    /* Adjusted close button position */
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
 }
