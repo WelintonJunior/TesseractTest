@@ -7,6 +7,11 @@ let empada = 0;
 
 let auxStartManual = 0;
 
+const ENTRADA_MASSA = prompt('Insira o peso total da massa (g):');
+
+let amais = 0;
+let desperdicio = 0;
+
 document.getElementById('oprManual').addEventListener('click', (e) => {
     e.preventDefault();
     auxStartManual = 1;
@@ -64,6 +69,14 @@ function CadastrarManual() {
         chartTempo.data.labels.push(`Empada ${counterClick}`);
         chartTempo.data.datasets.forEach((dataset) => {
             dataset.data.push(timeSinceLastClick);
+
+            let pesoMassaTotal = 0;
+            for (i = 0; i < arrayNumbers.length; i++) {
+                pesoMassaTotal += parseInt(arrayNumbers[i])
+            }
+
+            desperdicio = parseInt(ENTRADA_MASSA - pesoMassaTotal)
+            document.getElementById('desperdicio').innerHTML = `${desperdicio} g`
         });
         chartTempo.update();
 
@@ -76,6 +89,8 @@ function CadastrarManual() {
         auxStartManual = 0
     } else {
         let valorInput = document.getElementById('outInput').value;
+        amais += parseInt(valorInput - 37)
+        document.getElementById('amais').innerHTML = `${amais} g`
         arrayNumbers.push(valorInput);
         chartNumeros.data.labels.push(`Empada ${counterClick}`);
         chartNumeros.data.datasets.forEach((dataset) => {

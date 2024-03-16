@@ -80,6 +80,8 @@ document.getElementById('okModal').addEventListener('click', (e) => {
                 chartTempo.data.datasets.forEach((dataset) => {
                     dataset.data.push(timeSinceLastClick);
                 });
+                amais += parseInt(number - 37)
+                document.getElementById('amais').innerHTML = `${amais} g`
                 chartTempo.update();
             });
         } else {
@@ -120,6 +122,8 @@ document.getElementById('okModal').addEventListener('click', (e) => {
                 numbers.forEach(number => {
                     const finalTimeCada = Date.now();
                     arrayNumbers.push(number);
+                    amais += parseInt(number - 37)
+                    document.getElementById('amais').innerHTML = `${amais} g`
                     chartNumeros.data.labels.push(`Empada ${chartNumeros.data.labels.length + 1}`); // Atualiza o eixo X
                     chartNumeros.data.datasets.forEach((dataset) => {
                         dataset.data.push(number); // Adiciona o número ao dataset
@@ -149,6 +153,14 @@ document.getElementById('okModal').addEventListener('click', (e) => {
                 setTimeout(() => {
                     const finalClickTime = Date.now();
                     const totalTime = (finalClickTime - startTime) / 1000;
+                    let pesoMassaTotal = 0;
+                    for (i = 0; i < arrayNumbers.length; i++) {
+                        pesoMassaTotal += parseInt(arrayNumbers[i])
+                    }
+
+                    desperdicio = parseInt(ENTRADA_MASSA - pesoMassaTotal)
+                    document.getElementById('desperdicio').innerHTML = `${desperdicio} g`
+
                     document.getElementById('total').innerHTML = `${totalTime.toFixed(2)} segundos`;
                     document.getElementById('capture-btn').setAttribute('disabled', 'disabled');
                     document.getElementById('resetar').removeAttribute('disabled');
