@@ -1,0 +1,68 @@
+body {
+    display: flex;
+    font-family: sans-serif;
+}
+
+#video-container {
+    overflow: hidden;
+    width: 99%;
+    height: 300px;
+}
+
+#video {
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    height: auto;
+}
+
+.zoom-in {
+    transform: scale(1.2);
+}
+
+.zoom-out {
+    transform: scale(0.8);
+}
+
+#outInput {
+    width: 30px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.um {
+    width: 33.3%;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.dois {
+    width: 33.3%;
+    border: 1px solid black;
+    padding: 10px;
+
+}
+
+.tres {
+    width: 33.3%;
+    border: 1px solid black;
+    padding: 10px;
+
+}
+
+.botoes {
+    margin-top: 10px;
+}
+
+.botoes button {
+    background-color: rgb(173, 216, 230);
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.botoes button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    transition: 1s;
+}
